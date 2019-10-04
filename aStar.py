@@ -4,12 +4,14 @@ import pygame
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 
 # Set dimension for each cell
 WIDTH = 94
 HEIGHT = 94
 MARGIN = 5
+
+
 
 # Creating a two dimensional array
 grid = []
