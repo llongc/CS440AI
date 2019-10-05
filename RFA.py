@@ -1,4 +1,7 @@
 import heapq
+from gridworld import gridworld
+import time
+
 #sample grid from the description
 grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
 
@@ -31,6 +34,8 @@ end = cell(4, 4)
 start.getHeuristic(4, 4)
 end.getHeuristic(4, 4)
 
+gw = gridworld(500, 94, 94, 5, start, end, grid)
+# gw.loop()
 #find the shortest path for each step
 def computePath(curr, target):
     closedset = set()
@@ -91,6 +96,10 @@ while True:
     result(path)
     print("futurePath:")
     result(futurePath)
+    gw.draw_cell(path,2)
+    gw.draw_cell(path,3)
+    gw.show()
+    time.sleep(0.5)
     direction = [[1,0],[0,1],[-1,0],[0,-1]]
     for dir in direction:
         a = pt.x + dir[0]
@@ -112,3 +121,4 @@ while True:
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+gw.loop()

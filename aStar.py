@@ -1,4 +1,4 @@
-import pygame 
+import pygame
 
 # Defining some color
 BLACK = (0, 0, 0)
@@ -27,7 +27,7 @@ grid[3][2]=1
 grid[2][3]=1
 grid[3][3]=1
 grid[4][3]=1
-
+i = 1
 # Initialize pygame
 pygame.init()
 
@@ -44,7 +44,7 @@ flag = False
 clock = pygame.time.Clock()
 
 while not flag:
-    # If user clicked exit, the loop will be terminated 
+    # If user clicked exit, the loop will be terminated
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flag = True
@@ -63,6 +63,9 @@ while not flag:
                               HEIGHT])
 
     clock.tick(30)
+    i+=1
+    if i == 30:
+        grid[0][0] = 1
     # Update the screen if there is anything new
     pygame.display.flip()
 
