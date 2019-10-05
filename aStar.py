@@ -4,12 +4,14 @@ import pygame
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
-RED = (255, 0, 0)
+YELLOW = (255, 255, 0)
 
 # Set dimension for each cell
 WIDTH = 94
 HEIGHT = 94
 MARGIN = 5
+
+
 
 # Creating a two dimensional array
 grid = []
@@ -17,6 +19,14 @@ for row in range(5):
     grid.append([])
     for column in range(5):
         grid[row].append(0)
+
+# Creating blockage
+grid[1][2]=1
+grid[2][2]=1
+grid[3][2]=1
+grid[2][3]=1
+grid[3][3]=1
+grid[4][3]=1
 
 # Initialize pygame
 pygame.init()
@@ -44,12 +54,14 @@ while not flag:
     for row in range(5):
         for column in range(5):
             color = WHITE
+            if grid[row][column] == 1:
+                color = BLACK
             pygame.draw.rect(win,
             color,[(MARGIN + WIDTH) * column + MARGIN,
                               (MARGIN + HEIGHT) * row + MARGIN,
                               WIDTH,
                               HEIGHT])
-    
+
     clock.tick(30)
     # Update the screen if there is anything new
     pygame.display.flip()
