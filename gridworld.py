@@ -39,17 +39,24 @@ class gridworld:
                     self.grid[row][col] = 3
 
 
-    def draw_cell(self, nodes, colval, grid):
+    def draw_cell(self, param, grid):
         for i in range(len(grid)):
             for j in range(len(grid[0])):
-                if grid[i][j] == 1:
+                if [i, j] == self.start:
+                    self.grid[i][j] = 2
+                elif [i, j] == self.target:
+                    self.grid[i][j] = 3
+                elif grid[i][j] == 1:
                     self.grid[i][j] = 1
+                elif grid[i][j] == 0:
+                    self.grid[i][j] = 0
 
-        for node in nodes:
-            row = node.x
-            column = node.y
+        for par in param:
+            for node in par[0]:
+                row = node.x
+                column = node.y
 
-            self.grid[row][column] = colval
+                self.grid[row][column] = par[1]
 
             self.draw()
 
@@ -73,4 +80,4 @@ class gridworld:
     					self.width,
     					self.height])
         pygame.display.update()
-        self.clock.tick(20)
+        self.clock.tick(5)

@@ -41,7 +41,7 @@ gw.draw()
 #find the shortest path for each step
 def computePath(curr, target):
     closedset = set()
-    direction = [[1,0],[0,1],[-1,0],[0,-1]]
+    direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
     heapq.heappush(openlist, curr)
     closedset.add((curr.x, curr.y))
@@ -104,12 +104,10 @@ while not flag:
     result(path)
     print("futurePath:")
     result(futurePath)
-    gw.draw_cell(path,2,grid)
-    gw.draw_cell(futurePath,3,grid)
-    # pygame.display.flip()
-    # clock.tick(10)
-    # gw.show()
-    direction = [[1,0],[0,1],[-1,0],[0,-1]]
+    gw.draw_cell([[path,2],[futurePath,3]],grid)
+
+
+    direction = [[0,1],[1,0],[-1,0],[0,-1]]
     for dir in direction:
         a = pt.x + dir[0]
         b = pt.y + dir[1]
