@@ -48,6 +48,17 @@ while not flag:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flag = True
+        if event.type == pygame.MOUSEBUTTONUP:
+            if grid[0][0] == 1:
+                grid[0][0] = 0
+            else:
+                grid[0][0] = 1
+            # pygame.draw.rect(win,
+            # BLACK,[(MARGIN + WIDTH) * 0 + MARGIN,
+            #                   (MARGIN + HEIGHT) * 0 + MARGIN,
+            #                   WIDTH,
+            #                   HEIGHT])
+            pygame.display.flip()
 
     # Drawing the grid
     win.fill(BLACK)
@@ -63,9 +74,7 @@ while not flag:
                               HEIGHT])
 
     clock.tick(30)
-    i+=1
-    if i == 30:
-        grid[0][0] = 1
+
     # Update the screen if there is anything new
     pygame.display.flip()
 
