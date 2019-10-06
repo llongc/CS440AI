@@ -36,7 +36,7 @@ start.getHeuristic(4, 4)
 end.getHeuristic(4, 4)
 
 gw = gridworld(500, 94, 94, 5, start, end, grid)
-
+gw.draw()
 
 #find the shortest path for each step
 def computePath(curr, target):
@@ -87,80 +87,105 @@ def result(path):
         string += "("+str(i.x)+", "+str(i.y)+")"
     print(string)
 
-def Main():
-    pt = start
-    futurePath = []
-    path = []
-    while True:
-        print("----------------------------------------------------")
-        path.append(pt)
-        print("path: ")
-        result(path)
-        print("futurePath:")
-        result(futurePath)
-        gw.draw_cell(path,2)
-        gw.draw_cell(futurePath,3)
-        # pygame.display.flip()
-        # clock.tick(10)
-        # gw.show()
-        direction = [[1,0],[0,1],[-1,0],[0,-1]]
-        for dir in direction:
-            a = pt.x + dir[0]
-            b = pt.y + dir[1]
-            if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and grid[a][b] == 1:
-                visit[a][b] = 1
-        if len(futurePath) != 0 and visit[futurePath[0].x][futurePath[0].y] == 0:
-            pt = futurePath[0]
-            futurePath = futurePath[1:len(futurePath)]
-        else:
-            shortest = computePath(pt, end)
-            if shortest == None:
-                print("fail to find a path")
-                break
-            nextPoint, futurePath = getParent(shortest)
-            pt = nextPoint
-            pt.parent = None
-    #     print(pt.x, pt.y)
-        if(pt.x == end.x and pt.y == end.y):
-            print("reach the target")
-            break
+# def Main():
+#     pt = start
+#     futurePath = []
+#     path = []
+#     while True:
+#         print("----------------------------------------------------")
+#         path.append(pt)
+#         print("path: ")
+#         result(path)
+#         print("futurePath:")
+#         result(futurePath)
+#         gw.draw_cell(path,2)
+#         gw.draw_cell(futurePath,3)
+#         # pygame.display.flip()
+#         # clock.tick(10)
+#         # gw.show()
+#         direction = [[1,0],[0,1],[-1,0],[0,-1]]
+#         for dir in direction:
+#             a = pt.x + dir[0]
+#             b = pt.y + dir[1]
+#             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and grid[a][b] == 1:
+#                 visit[a][b] = 1
+#         if len(futurePath) != 0 and visit[futurePath[0].x][futurePath[0].y] == 0:
+#             pt = futurePath[0]
+#             futurePath = futurePath[1:len(futurePath)]
+#         else:
+#             shortest = computePath(pt, end)
+#             if shortest == None:
+#                 print("fail to find a path")
+#                 break
+#             nextPoint, futurePath = getParent(shortest)
+#             pt = nextPoint
+#             pt.parent = None
+#     #     print(pt.x, pt.y)
+#         if(pt.x == end.x and pt.y == end.y):
+#             print("reach the target")
+#             break
 
 # gw.loop()
 
 # loop flag
 flag = False
 
-# Used to determine how fast the screen updates
-clock = pygame.time.Clock()
+# # Used to determine how fast the screen updates
+# clock = pygame.time.Clock()
+#
+# while not flag:
+#     # If user clicked exit, the loop will be terminated
+#
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             flag = True
+#
+#         elif event.type == pygame.MOUSEBUTTONUP:
+#             Main()
+#     gw.draw()
+#
+#     pygame.display.flip()
+#     clock.tick(10)
+# pygame.quit()
 
+pt = start
+futurePath = []
+path = []
 while not flag:
-    # If user clicked exit, the loop will be terminated
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flag = True
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            Main()
-    gw.draw()
-    # for row in range(len(gw.grid)):
-    #     for col in range(len(gw.grid[0])):
-    #         colval = gw.grid[row][col]
-    #         if colval == 2:
-    #             color = gw.YELLOW
-    #         elif colval == 3:
-    #             color = gw.GREEN
-    #         elif colval == 1:
-    #             color = gw.BLACK
-    #         else:
-    #             color = gw.WHITE
-    #         rect = pygame.draw.rect(gw.win,
-	# 				color,
-	# 				[(gw.margin + gw.width)*col+gw.margin,
-	# 				(gw.margin + gw.height)*row+gw.margin,
-	# 				gw.width,
-	# 				gw.height])
-    # # Update the screen if there is anything new
-    pygame.display.flip()
-    clock.tick(10)
+        continue
+    print("----------------------------------------------------")
+    path.append(pt)
+    print("path: ")
+    result(path)
+    print("futurePath:")
+    result(futurePath)
+    gw.draw_cell(path,2)
+    gw.draw_cell(futurePath,3)
+    # pygame.display.flip()
+    # clock.tick(10)
+    # gw.show()
+    direction = [[1,0],[0,1],[-1,0],[0,-1]]
+    for dir in direction:
+        a = pt.x + dir[0]
+        b = pt.y + dir[1]
+        if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and grid[a][b] == 1:
+            visit[a][b] = 1
+    if len(futurePath) != 0 and visit[futurePath[0].x][futurePath[0].y] == 0:
+        pt = futurePath[0]
+        futurePath = futurePath[1:len(futurePath)]
+    else:
+        shortest = computePath(pt, end)
+        if shortest == None:
+            print("fail to find a path")
+            break
+        nextPoint, futurePath = getParent(shortest)
+        pt = nextPoint
+        pt.parent = None
+#     print(pt.x, pt.y)
+    if(pt.x == end.x and pt.y == end.y):
+        print("reach the target")
+        break
 pygame.quit()
