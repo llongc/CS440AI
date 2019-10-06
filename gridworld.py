@@ -39,36 +39,20 @@ class gridworld:
                     self.grid[row][col] = 3
 
 
-        # flag = False
-        # while flag == False:
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.QUIT:
-        #             flag = True
-        #     self.clock.tick(60)
+    def draw_cell(self, nodes, colval, grid):
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j] == 1:
+                    self.grid[i][j] = 1
 
-    def draw_cell(self, nodes, colval):
         for node in nodes:
             row = node.x
             column = node.y
-            # if colval == 1:
-            #     color = self.BLACK
-            # elif colval == 2:
-            #     color = self.YELLOW
-            # elif colval == 3:
-            #     color = self.GREEN
-            # else:
-            #     color = self.WHITE
+
             self.grid[row][column] = colval
-            # rect = pygame.draw.rect(self.win,
-			# 		color,
-			# 		[(self.margin + self.width)*column+self.margin,
-			# 		(self.margin + self.height)*row+self.margin,
-			# 		self.width,
-			# 		self.height])
-            # print("draw a cell", row, column, colval)
+
             self.draw()
-            # pygame.display.flip()
-            # self.clock.tick(60)
+
 
     def draw(self):
         for row in range(len(self.grid)):
@@ -89,14 +73,4 @@ class gridworld:
     					self.width,
     					self.height])
         pygame.display.update()
-        self.clock.tick(10)
-
-
-
-    # def loop(self):
-    #     flag = False
-    #     while flag == False:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 flag = True
-    #         self.clock.tick(10)
+        self.clock.tick(20)
