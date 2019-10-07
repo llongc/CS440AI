@@ -6,6 +6,8 @@ from cell import cell
 
 #sample grid from the description
 grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+#initial status of observing blocks
+visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 
 #manually setup start and end cells
 start = cell(4, 2)
@@ -13,7 +15,7 @@ end = cell(4, 4)
 start.getHeuristic(4, 4)
 end.getHeuristic(4, 4)
 
-gw = gridworld(500, 94, 94, 5, start, end, grid)
+gw = gridworld(500, 5, start, end, grid)
 gw.draw()
 
 #find the shortest path for each step
@@ -41,8 +43,7 @@ def computePath(curr, target):
                 heapq.heappush(openlist, tmp)
     return
 
-#initial status of observing blocks
-visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+
 
 
 #given the cell object, from the taget, find the next step

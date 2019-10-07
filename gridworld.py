@@ -3,16 +3,16 @@ from copy import deepcopy
 #create a gridworld
 class gridworld:
 
-    def __init__(self, screen_size, width, height, margin, start, target, grid):
+    def __init__(self, screen_size, numcell, start, target, grid):
 
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.GREEN = (0, 255, 0)
         self.YELLOW = (255, 255, 0)
 
-        self.width = width
-        self.height = height
-        self.margin = margin
+        self.width = (screen_size - 3 * (numcell + 1)) / numcell
+        self.height = self.width
+        self.margin = 3
         self.color = self.WHITE
 
         pygame.init()
