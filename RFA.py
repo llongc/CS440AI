@@ -2,32 +2,10 @@ import heapq
 from gridworld import gridworld
 import pygame
 import time
+from cell import cell
 
 #sample grid from the description
 grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
-
-#cell object definition
-class cell:
-    h = 0
-    g = 0
-    f = 0
-    parent = None
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    # compares the second value
-    def __lt__(self, other):
-        if self.f < other.f:
-            return True
-        elif self.f > other.f:
-            return False
-        else:
-            self.h < other.h
-
-    def getHeuristic(self, targetx, targety):
-        self.h = abs(targetx - self.x) + abs(targety - self.y)
-        self.f = self.h + self.g
 
 #manually setup start and end cells
 start = cell(4, 2)
@@ -87,9 +65,9 @@ def result(path):
         string += "("+str(i.x)+", "+str(i.y)+")"
     print(string)
 
+
+#initial param for main loop
 flag = False
-
-
 pt = start
 futurePath = []
 path = []
@@ -98,15 +76,19 @@ while not flag:
         if event.type == pygame.QUIT:
             flag = True
         continue
+
+    #out print paths in the terminal for testing purpose
     print("----------------------------------------------------")
     path.append(pt)
     print("path: ")
     result(path)
     print("futurePath:")
     result(futurePath)
+
+    #draw the path
     gw.draw_cell([[path,2],[futurePath,3]],grid)
 
-
+    #main algorithm
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     for dir in direction:
         a = pt.x + dir[0]
@@ -124,8 +106,8 @@ while not flag:
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
         pt.parent = None
-#     print(pt.x, pt.y)
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+
 pygame.quit()
