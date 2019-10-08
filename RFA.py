@@ -40,7 +40,7 @@ def computePath(curr, target):
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
-        if pt.x == target.x & pt.y == target.y:
+        if pt.x == target.x and pt.y == target.y:
             print("got it")
             return pt
             break

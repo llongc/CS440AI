@@ -21,18 +21,21 @@ for row in range(101):
     visit.append([])
     for column in range(101):
         visit[row].append(0)
-
+# grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+# visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(50, 50)
-start.getHeuristic(50, 50)
-end.getHeuristic(50, 50)
+end = cell(90, 90)
+start.getHeuristic(90, 90)
+end.getHeuristic(90, 90)
 
 gw = gridworld(605, 101, start, end, grid)
 gw.draw()
 
 #find the shortest path for each step
 def computePath(curr, target):
+    if curr.x == target.x and curr.y == target.y:
+        return target
     closedset = set()
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
@@ -40,7 +43,8 @@ def computePath(curr, target):
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
-        if pt.x == target.x & pt.y == target.y:
+
+        if pt.x == target.x and pt.y == target.y:
             print("got it")
             return pt
             break
@@ -48,12 +52,16 @@ def computePath(curr, target):
             a = pt.x + dir[0]
             b = pt.y + dir[1]
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
+                # print(a, b)
                 tmp = cell(a, b)
                 closedset.add((a, b))
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
+                # print(tmp.f, tmp.g, tmp.h)
                 heapq.heappush(openlist, tmp)
+                # break
+        # break
     return
 
 
@@ -62,15 +70,13 @@ def computePath(curr, target):
 #given the cell object, from the taget, find the next step
 def getParent(a):
     future = []
-    p = a
-    if p.parent == None:
-        return p
-    while p.parent.parent != None:
+    p = a.parent
+    while p.parent != None:
         future.append(p)
         tmp = p
         p = p.parent
         tmp.parent = None
-    return p, future
+    return a.parent, future
 
 #print out the path, for testing purpose
 def result(path):
@@ -113,9 +119,15 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
+        print("need to computer a new path")
+        print(pt.x, pt.y)
         shortest = computePath(end, pt)
+        print(shortest.x,shortest.y)
         if shortest == None:
             print("fail to find a path")
+            break
+        if shortest.x == end.x and shortest.y == end.y:
+            print("finished")
             break
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
