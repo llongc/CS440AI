@@ -24,9 +24,9 @@ for row in range(101):
 
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(99, 99)
-start.getHeuristic(4, 4)
-end.getHeuristic(99, 99)
+end = cell(50, 50)
+start.getHeuristic(50, 50)
+end.getHeuristic(50, 50)
 
 gw = gridworld(605, 101, start, end, grid)
 gw.draw()
@@ -66,7 +66,7 @@ def getParent(a):
     if p.parent == None:
         return p
     while p.parent.parent != None:
-        future.insert(0, p)
+        future.append(p)
         tmp = p
         p = p.parent
         tmp.parent = None
@@ -113,7 +113,7 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-        shortest = computePath(pt, end)
+        shortest = computePath(end, pt)
         if shortest == None:
             print("fail to find a path")
             break
