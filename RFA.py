@@ -2,9 +2,19 @@ import heapq
 from gridworld import gridworld
 import pygame
 import time
+import random
+
 
 #sample grid from the description
-grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+grid = []
+for row in range(101):
+    grid.append([])
+    for column in range(101):
+        grid[row].append(0)
+
+for raw in range(30):
+    for colum in range(30):
+        grid[random.randrange(0,100)][random.randrange(0,100)]=1
 
 #cell object definition
 class cell:
@@ -31,11 +41,11 @@ class cell:
 
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(4, 4)
+end = cell(99, 99)
 start.getHeuristic(4, 4)
-end.getHeuristic(4, 4)
+end.getHeuristic(99, 99)
 
-gw = gridworld(500, 94, 94, 5, start, end, grid)
+gw = gridworld(605, 5, 5, 1, start, end, grid)
 gw.draw()
 
 #find the shortest path for each step
@@ -64,7 +74,11 @@ def computePath(curr, target):
     return
 
 #initial status of observing blocks
-visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+visit = []
+for row in range(101):
+    visit.append([])
+    for column in range(101):
+        visit[row].append(0)
 
 
 #given the cell object, from the taget, find the next step
@@ -89,6 +103,7 @@ def result(path):
 
 flag = False
 
+clock = pygame.time.Clock()
 
 pt = start
 futurePath = []
@@ -97,7 +112,7 @@ while not flag:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             flag = True
-        continue
+            continue
     print("----------------------------------------------------")
     path.append(pt)
     print("path: ")
@@ -106,9 +121,9 @@ while not flag:
     result(futurePath)
     gw.draw_cell(path,2,grid)
     gw.draw_cell(futurePath,3,grid)
-    # pygame.display.flip()
-    # clock.tick(10)
-    # gw.show()
+    pygame.display.flip()
+    clock.tick(999)
+    gw.show()
     direction = [[1,0],[0,1],[-1,0],[0,-1]]
     for dir in direction:
         a = pt.x + dir[0]
@@ -126,8 +141,10 @@ while not flag:
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
         pt.parent = None
-#     print(pt.x, pt.y)
+        print(pt.x, pt.y)
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+    gw = gridworld(605, 5, 5, 1, start, end, grid)
+    gw.draw()
 pygame.quit()
