@@ -10,15 +10,15 @@ class gridworld:
         self.GREEN = (0, 255, 0)
         self.YELLOW = (255, 255, 0)
 
-        self.width = (screen_size - 3 * (numcell + 1)) / numcell
+        self.margin = 0.5
+        self.width = (screen_size - self.margin * (numcell + 1)) / numcell
         self.height = self.width
-        self.margin = 3
         self.color = self.WHITE
 
         pygame.init()
 
         self.size = (screen_size, screen_size)
-        self.win = pygame.display.set_mode((500, 500))
+        self.win = pygame.display.set_mode(self.size)
 
         pygame.display.set_caption("A* Algorithm Pathfinder")
 
@@ -80,4 +80,4 @@ class gridworld:
     					self.width,
     					self.height])
         pygame.display.update()
-        self.clock.tick(5)
+        self.clock.tick(1)
