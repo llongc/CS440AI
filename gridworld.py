@@ -10,7 +10,7 @@ class gridworld:
         self.GREEN = (0, 255, 0)
         self.YELLOW = (255, 255, 0)
 
-        self.margin = 0.5
+        self.margin = 1
         self.width = (screen_size - self.margin * (numcell + 1)) / numcell
         self.height = self.width
         self.color = self.WHITE
@@ -80,4 +80,4 @@ class gridworld:
     					self.width,
     					self.height])
         pygame.display.update()
-        self.clock.tick(1)
+        self.clock.tick(5)

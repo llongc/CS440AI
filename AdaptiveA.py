@@ -4,31 +4,39 @@ import pygame
 import time
 import random
 from cell import cell
-
-#sample grid from the description
-grid = []
-for row in range(101):
-    grid.append([])
-    for column in range(101):
-        grid[row].append(0)
-
-for raw in range(31):
-    for colum in range(31):
-        grid[random.randrange(0,100)][random.randrange(0,100)]=1
-#initial status of observing blocks
-visit = []
-for row in range(101):
-    visit.append([])
-    for column in range(101):
-        visit[row].append(0)
-
+print("========================================================================================")
+# #sample grid from the description
+# grid = []
+# for row in range(101):
+#     grid.append([])
+#     for column in range(101):
+#         grid[row].append(0)
+#
+# for raw in range(31):
+#     for colum in range(31):
+#         grid[random.randrange(0,100)][random.randrange(0,100)]=1
+# #initial status of observing blocks
+# visit = []
+# for row in range(101):
+#     visit.append([])
+#     for column in range(101):
+#         visit[row].append(0)
+# #matrix to store previous potentail cost
+# newh = []
+# for row in range(101):
+#     newh.append([])
+#     for column in range(101):
+#         newh[row].append(0)
+grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+newh = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(99, 99)
-start.getHeuristic(99, 99)
-end.getHeuristic(99, 99)
+end = cell(4, 4)
+start.getHeuristic(4, 4)
+end.getHeuristic(4, 4)
 
-gw = gridworld(605, 101, start, end, grid)
+gw = gridworld(605, 5, start, end, grid)
 gw.draw()
 
 #find the shortest path for each step
@@ -40,6 +48,7 @@ def computePath(curr, target):
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
+        print(pt.x, pt.y, pt.f, pt.h, newh[pt.x][pt.y])
         if pt.x == target.x and pt.y == target.y:
             print("got it")
             return pt
@@ -52,7 +61,10 @@ def computePath(curr, target):
                 closedset.add((a, b))
                 tmp.parent = pt
                 tmp.g = pt.g + 1
-                tmp.getHeuristic(target.x, target.y)
+                if newh[a][b] != 0:
+                    tmp.h = newh[a][b]
+                else:
+                    tmp.getHeuristic(target.x, target.y)
                 heapq.heappush(openlist, tmp)
     return
 
@@ -63,13 +75,20 @@ def computePath(curr, target):
 def getParent(a):
     future = []
     p = a
+    finalcost = p.f
     if p.parent == None:
+        newh[p.x][p.y] = finalcost - p.g
         return p
     while p.parent.parent != None:
         future.insert(0, p)
+        newh[p.x][p.y] = finalcost - p.g
+        # print(p.x, p.y, p.f, p.h, newh[p.x][p.y])
         tmp = p
         p = p.parent
         tmp.parent = None
+    newh[p.x][p.y] = finalcost - p.g
+    newh[p.parent.x][p.parent.y] = finalcost - p.parent.g
+    # print(p.x, p.y, p.f, p.h, newh[p.x][p.y])
     return p, future
 
 #print out the path, for testing purpose

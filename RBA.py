@@ -45,7 +45,7 @@ def computePath(curr, target):
         pt = heapq.heappop(openlist)
 
         if pt.x == target.x and pt.y == target.y:
-            print("got it")
+            # print("got it")
             return pt
             break
         for dir in direction:
@@ -98,12 +98,12 @@ while not flag:
         continue
 
     #out print paths in the terminal for testing purpose
-    print("----------------------------------------------------")
+    # print("----------------------------------------------------")
     path.append(pt)
-    print("path: ")
-    result(path)
-    print("futurePath:")
-    result(futurePath)
+    # print("path: ")
+    # result(path)
+    # print("futurePath:")
+    # result(futurePath)
 
     #draw the path
     gw.draw_cell([[path,2],[futurePath,3]],grid)
@@ -119,15 +119,15 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-        print("need to computer a new path")
-        print(pt.x, pt.y)
+        # print("need to computer a new path")
+        # print(pt.x, pt.y)
         shortest = computePath(end, pt)
-        print(shortest.x,shortest.y)
+        # print(shortest.x,shortest.y)
         if shortest == None:
             print("fail to find a path")
             break
         if shortest.x == end.x and shortest.y == end.y:
-            print("finished")
+            # print("finished")
             break
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
