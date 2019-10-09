@@ -1,12 +1,13 @@
 import os
 import random
 
+# create a new directory if not exist
 if not os.path.exists("girds"):
     os.mkdir("grids")
-    print("Directory " , "grid" ,  " Created ")
+    print("Directory " , "grids" ,  " Created ")
 
 
-
+#creating 50 randomly generated grid
 for i in range(50):
     fileN = "grids/gird" + str(i)
     
