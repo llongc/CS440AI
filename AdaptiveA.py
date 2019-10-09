@@ -5,38 +5,38 @@ import time
 import random
 from cell import cell
 print("========================================================================================")
-# #sample grid from the description
-# grid = []
-# for row in range(101):
-#     grid.append([])
-#     for column in range(101):
-#         grid[row].append(0)
-#
-# for raw in range(31):
-#     for colum in range(31):
-#         grid[random.randrange(0,100)][random.randrange(0,100)]=1
-# #initial status of observing blocks
-# visit = []
-# for row in range(101):
-#     visit.append([])
-#     for column in range(101):
-#         visit[row].append(0)
-# #matrix to store previous potentail cost
-# newh = []
-# for row in range(101):
-#     newh.append([])
-#     for column in range(101):
-#         newh[row].append(0)
-grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
-visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
-newh = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+ #sample grid from the description
+grid = []
+for row in range(101):
+    grid.append([])
+    for column in range(101):
+        grid[row].append(0)
+
+for raw in range(31):
+    for colum in range(31):
+        grid[random.randrange(0,100)][random.randrange(0,100)]=1
+ #initial status of observing blocks
+visit = []
+for row in range(101):
+    visit.append([])
+    for column in range(101):
+        visit[row].append(0)
+ #matrix to store previous potentail cost
+newh = []
+for row in range(101):
+    newh.append([])
+    for column in range(101):
+        newh[row].append(0)
+#grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+#visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+#newh = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(4, 4)
-start.getHeuristic(4, 4)
-end.getHeuristic(4, 4)
+end = cell(99, 99)
+start.getHeuristic(4, 2)
+end.getHeuristic(99, 99)
 
-gw = gridworld(605, 5, start, end, grid)
+gw = gridworld(605, 101, start, end, grid)
 gw.draw()
 
 #find the shortest path for each step
@@ -48,7 +48,7 @@ def computePath(curr, target):
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
-        print(pt.x, pt.y, pt.f, pt.h, newh[pt.x][pt.y])
+        #print(pt.x, pt.y, pt.f, pt.h, newh[pt.x][pt.y])
         if pt.x == target.x and pt.y == target.y:
             print("got it")
             return pt
