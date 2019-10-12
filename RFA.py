@@ -40,32 +40,30 @@ expandedCell = list()
 
 #find the shortest path for each step
 def computePath(curr, target):
+    print("11111")
     closedset = set()
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
     heapq.heappush(openlist, curr)
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
+
         pt = heapq.heappop(openlist)
         if pt.x == target.x and pt.y == target.y:
-<<<<<<< HEAD
-            #print("got it")
-=======
-            print("got it")
->>>>>>> 68194fea7402b3ba53fdd48f24a27ea4d6905f7b
             return pt, closedset
             break
         for dir in direction:
             a = pt.x + dir[0]
             b = pt.y + dir[1]
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
+
                 tmp = cell(a, b)
                 closedset.add((a, b))
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
                 heapq.heappush(openlist, tmp)
-    return 
+    return
 
 
 
@@ -75,7 +73,7 @@ def getParent(a):
     future = []
     p = a
     if p.parent == None:
-        return p
+        return p, future
     while p.parent.parent != None:
         future.insert(0, p)
         tmp = p
@@ -124,16 +122,13 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-<<<<<<< HEAD
         shortest, closedSet_i = computePath(pt, end)
         print("^^^^^^^^^^^^^^^^^^")
         print(type(list(closedSet_i)))
         if len(closedSet_i)!=0:
             expandedCell.extend(list(closedSet_i).copy())
         print(type(expandedCell))
-=======
         shortest, closeset_i = computePath(pt, end)
->>>>>>> 68194fea7402b3ba53fdd48f24a27ea4d6905f7b
         if shortest == None:
             print("fail to find a path")
             break
