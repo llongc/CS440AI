@@ -48,7 +48,11 @@ def computePath(curr, target):
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
         if pt.x == target.x and pt.y == target.y:
+<<<<<<< HEAD
             #print("got it")
+=======
+            print("got it")
+>>>>>>> 68194fea7402b3ba53fdd48f24a27ea4d6905f7b
             return pt, closedset
             break
         for dir in direction:
@@ -120,12 +124,16 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
+<<<<<<< HEAD
         shortest, closedSet_i = computePath(pt, end)
         print("^^^^^^^^^^^^^^^^^^")
         print(type(list(closedSet_i)))
         if len(closedSet_i)!=0:
             expandedCell.extend(list(closedSet_i).copy())
         print(type(expandedCell))
+=======
+        shortest, closeset_i = computePath(pt, end)
+>>>>>>> 68194fea7402b3ba53fdd48f24a27ea4d6905f7b
         if shortest == None:
             print("fail to find a path")
             break
