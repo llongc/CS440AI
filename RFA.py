@@ -42,7 +42,7 @@ def computePath(curr, target):
         pt = heapq.heappop(openlist)
         if pt.x == target.x and pt.y == target.y:
             print("got it")
-            return pt
+            return pt, closedset
             break
         for dir in direction:
             a = pt.x + dir[0]
@@ -113,7 +113,7 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-        shortest = computePath(pt, end)
+        shortest, closeset_i = computePath(pt, end)
         if shortest == None:
             print("fail to find a path")
             break
