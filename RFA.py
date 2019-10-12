@@ -24,19 +24,43 @@ from cell import cell
     #for column in range(101):
        # visit[row].append(0)
 
-grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
-visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+# grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+# visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+
+grid = []
+with open('grids/grid0') as file:
+    for line in file:
+        line = line[:-1]
+        k = [int(char) for char in line]
+        grid.append(k)
+visit = [[] for i in range(101)]
+for i in range(101):
+    visit[i] = [0 for i in range(101)]
+
 
 #manually setup start and end cells
+# start = cell(4, 2)
+# end = cell(4, 4)
+# start.getHeuristic(4, 4)
+# end.getHeuristic(4, 4)
 start = cell(0, 0)
-end = cell(4, 4)
-start.getHeuristic(4, 4)
-end.getHeuristic(4, 4)
+end = cell(100, 100)
+start.getHeuristic(100, 100)
+end.getHeuristic(100, 100)
 
-gw = gridworld(605, 5, start, end, grid)
+gw = gridworld(605, 101, start, end, grid)
 gw.draw()
 
 expandedCell = list()
+
+def checkandremove(pt, openlist):
+    # print(len(openlist))
+    # print("-----")
+    for i in range(len(openlist)):
+        # print(i)
+        if pt.x == openlist[i].x and pt.y == openlist[i].y:
+            del openlist[i]
+            break
 
 #find the shortest path for each step
 def computePath(curr, target):
@@ -50,9 +74,10 @@ def computePath(curr, target):
     while len(openlist) != 0:
 
         pt = heapq.heappop(openlist)
-        print("expanding cell: ")
-        print(pt.x, pt.y, pt.f, pt.g)
-        print("-------")
+        closedset.add((pt.x, pt.y))
+        # print("expanding cell: ")
+        # print(pt.x, pt.y, pt.f, pt.g)
+        # print("-------")
         if pt.x == target.x and pt.y == target.y:
             return pt, closedset
             break
@@ -62,14 +87,15 @@ def computePath(curr, target):
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
 
                 tmp = cell(a, b)
-                closedset.add((a, b))
+                # closedset.add((a, b))
+                checkandremove(tmp, openlist)
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
-                print(tmp.x, tmp.y, tmp.f, tmp.g)
+                # print(tmp.x, tmp.y, tmp.f, tmp.g)
                 heapq.heappush(openlist, tmp)
                 # print(len(openlist))
-    return
+    return None, None
 
 
 
@@ -100,7 +126,7 @@ flag = False
 pt = start
 futurePath = []
 path = []
-count = 0;
+# count = 0;
 while not flag:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -108,9 +134,9 @@ while not flag:
         continue
 
     #out print paths in the terminal for testing purpose
-    print("----------------------------------------------------")
-    count+=1
-    print(str(count)+" :")
+    # print("----------------------------------------------------")
+    # count+=1
+    # print(str(count)+" :")
     path.append(pt)
     # print("path: ")
     # result(path)
@@ -133,14 +159,15 @@ while not flag:
     else:
         shortest, closedSet_i = computePath(pt, end)
         print("^^^^^^^^^^^^^^^^^^")
-        print(type(list(closedSet_i)))
-        if len(closedSet_i)!=0:
-            expandedCell.extend(list(closedSet_i).copy())
-        print(type(expandedCell))
-        shortest, closeset_i = computePath(pt, end)
+        # print(type(list(closedSet_i)))
         if shortest == None:
             print("fail to find a path")
             break
+        if len(closedSet_i)!=0:
+            expandedCell.extend(list(closedSet_i).copy())
+        # print(type(expandedCell))
+        shortest, closeset_i = computePath(pt, end)
+
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
         pt.parent = None
