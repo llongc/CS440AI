@@ -7,7 +7,7 @@ from cell import cell
 
 
 grid = []
-with open('grids/grid0') as file:
+with open('grids/grid1') as file:
     for line in file:
         line = line[:-1]
         k = [int(char) for char in line]
@@ -52,15 +52,24 @@ gw.draw()
 
 expandedCell = list()
 
+def checkandremove(pt, openlist):
+    # print(len(openlist))
+    # print("-----")
+    for i in range(len(openlist)):
+        # print(i)
+        if pt.x == openlist[i].x and pt.y == openlist[i].y:
+            del openlist[i]
+            break
 #find the shortest path for each step
 def computePath(curr, target):
     closedset = set()
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
     heapq.heappush(openlist, curr)
-    closedset.add((curr.x, curr.y))
+    # closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
+        closedset.add((pt.x, pt.y))
         #print(pt.x, pt.y, pt.f, pt.h, newh[pt.x][pt.y])
         if pt.x == target.x and pt.y == target.y:
             print("got it")
@@ -71,7 +80,7 @@ def computePath(curr, target):
             b = pt.y + dir[1]
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
                 tmp = cell(a, b)
-                closedset.add((a, b))
+                checkandremove(tmp, openlist)
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 if newh[a][b] != 0:
@@ -79,7 +88,7 @@ def computePath(curr, target):
                 else:
                     tmp.getHeuristic(target.x, target.y)
                 heapq.heappush(openlist, tmp)
-    return 
+    return
 
 
 
@@ -126,9 +135,9 @@ while not flag:
     #print("----------------------------------------------------")
     path.append(pt)
     #print("path: ")
-    result(path)
+    # result(path)
     #print("futurePath:")
-    result(futurePath)
+    # result(futurePath)
 
     #draw the path
     gw.draw_cell([[path,2],[futurePath,3]],grid)
@@ -145,10 +154,11 @@ while not flag:
         futurePath = futurePath[1:len(futurePath)]
     else:
         shortest, closedSet_i = computePath(pt, end)
-        expandedCell.extend(list(closedSet_i).copy())
         if shortest == None:
             print("fail to find a path")
             break
+        expandedCell.extend(list(closedSet_i).copy())
+
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
         pt.parent = None
