@@ -40,7 +40,8 @@ expandedCell = list()
 
 #find the shortest path for each step
 def computePath(curr, target):
-    print("11111")
+    # print("11111")
+    # print(target.x, target.y)
     closedset = set()
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
@@ -49,6 +50,9 @@ def computePath(curr, target):
     while len(openlist) != 0:
 
         pt = heapq.heappop(openlist)
+        print("expanding cell: ")
+        print(pt.x, pt.y, pt.f, pt.g)
+        print("-------")
         if pt.x == target.x and pt.y == target.y:
             return pt, closedset
             break
@@ -62,7 +66,9 @@ def computePath(curr, target):
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
+                print(tmp.x, tmp.y, tmp.f, tmp.g)
                 heapq.heappush(openlist, tmp)
+                # print(len(openlist))
     return
 
 
@@ -94,6 +100,7 @@ flag = False
 pt = start
 futurePath = []
 path = []
+count = 0;
 while not flag:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -102,11 +109,13 @@ while not flag:
 
     #out print paths in the terminal for testing purpose
     print("----------------------------------------------------")
+    count+=1
+    print(str(count)+" :")
     path.append(pt)
-    print("path: ")
-    result(path)
-    print("futurePath:")
-    result(futurePath)
+    # print("path: ")
+    # result(path)
+    # print("futurePath:")
+    # result(futurePath)
 
     #draw the path
     gw.draw_cell([[path,2],[futurePath,3]],grid)
