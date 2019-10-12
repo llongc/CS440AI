@@ -9,12 +9,12 @@ if not os.path.exists("girds"):
 
 #creating 50 randomly generated grid
 for i in range(50):
-    fileN = "grids/gird" + str(i)
+    fileN = "grids/grid" + str(i)
     
     grid = []
-    for row in range(100):
+    for row in range(101):
         grid.append([])
-        for column in range(100):
+        for column in range(101):
             grid[row].append(0)
 
     for raw in range(31):
@@ -22,8 +22,8 @@ for i in range(50):
             grid[random.randrange(0,100)][random.randrange(0,100)]=1
 
     f = open(fileN, "w")
-    for row in range(100):
-        for column in range(100):
+    for row in range(101):
+        for column in range(101):
             f.write(str(grid[row][column]))
         f.write("\n")
     f.close()

@@ -21,16 +21,18 @@ for row in range(101):
     visit.append([])
     for column in range(101):
         visit[row].append(0)
-# grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
-# visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
+#grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+#visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(90, 90)
-start.getHeuristic(90, 90)
-end.getHeuristic(90, 90)
+end = cell(50, 50)
+start.getHeuristic(4, 2)
+end.getHeuristic(50, 50)
 
 gw = gridworld(605, 101, start, end, grid)
 gw.draw()
+
+expandedCell = list()
 
 #find the shortest path for each step
 def computePath(curr, target):
@@ -43,16 +45,13 @@ def computePath(curr, target):
     closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
-
         if pt.x == target.x and pt.y == target.y:
-            # print("got it")
-            return pt
+            return pt, closedset
             break
         for dir in direction:
             a = pt.x + dir[0]
             b = pt.y + dir[1]
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
-                # print(a, b)
                 tmp = cell(a, b)
                 closedset.add((a, b))
                 tmp.parent = pt
@@ -121,7 +120,8 @@ while not flag:
     else:
         # print("need to computer a new path")
         # print(pt.x, pt.y)
-        shortest = computePath(end, pt)
+        shortest, closedSet_i = computePath(end, pt)
+        expandedCell.extend(list(closedSet_i).copy())
         # print(shortest.x,shortest.y)
         if shortest == None:
             print("fail to find a path")
@@ -135,4 +135,6 @@ while not flag:
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+
+print("Number of expanded cells:", len(expandedCell))
 pygame.quit()

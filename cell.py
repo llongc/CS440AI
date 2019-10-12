@@ -10,12 +10,7 @@ class cell:
 
     # compares the second value
     def __lt__(self, other):
-        if self.f < other.f:
-            return True
-        elif self.f > other.f:
-            return False
-        else:
-            self.h < other.h
+        return (self.f, self.g) > (other.f, other.g)
 
     def getHeuristic(self, targetx, targety):
         self.h = abs(targetx - self.x) + abs(targety - self.y)

@@ -32,12 +32,14 @@ for row in range(101):
 #newh = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 #manually setup start and end cells
 start = cell(4, 2)
-end = cell(99, 99)
+end = cell(50, 50)
 start.getHeuristic(4, 2)
-end.getHeuristic(99, 99)
+end.getHeuristic(50, 50)
 
 gw = gridworld(605, 101, start, end, grid)
 gw.draw()
+
+expandedCell = list()
 
 #find the shortest path for each step
 def computePath(curr, target):
@@ -51,7 +53,7 @@ def computePath(curr, target):
         #print(pt.x, pt.y, pt.f, pt.h, newh[pt.x][pt.y])
         if pt.x == target.x and pt.y == target.y:
             print("got it")
-            return pt
+            return pt, closedset
             break
         for dir in direction:
             a = pt.x + dir[0]
@@ -66,8 +68,7 @@ def computePath(curr, target):
                 else:
                     tmp.getHeuristic(target.x, target.y)
                 heapq.heappush(openlist, tmp)
-    return
-
+    return 
 
 
 
@@ -96,7 +97,7 @@ def result(path):
     string = ""
     for i in path:
         string += "("+str(i.x)+", "+str(i.y)+")"
-    print(string)
+    #print(string)
 
 
 #initial param for main loop
@@ -111,11 +112,11 @@ while not flag:
         continue
 
     #out print paths in the terminal for testing purpose
-    print("----------------------------------------------------")
+    #print("----------------------------------------------------")
     path.append(pt)
-    print("path: ")
+    #print("path: ")
     result(path)
-    print("futurePath:")
+    #print("futurePath:")
     result(futurePath)
 
     #draw the path
@@ -132,7 +133,8 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-        shortest = computePath(pt, end)
+        shortest, closedSet_i = computePath(pt, end)
+        expandedCell.extend(list(closedSet_i).copy())
         if shortest == None:
             print("fail to find a path")
             break
@@ -142,4 +144,5 @@ while not flag:
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+print("Number of expanded cells: ", len(expandedCell))
 pygame.quit()

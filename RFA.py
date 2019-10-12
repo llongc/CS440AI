@@ -5,31 +5,38 @@ import time
 import random
 from cell import cell
 
-#sample grid from the description
-grid = []
-for row in range(101):
-    grid.append([])
-    for column in range(101):
-        grid[row].append(0)
 
-for raw in range(31):
-    for colum in range(31):
-        grid[random.randrange(0,100)][random.randrange(0,100)]=1
+
+#sample grid from the description
+#grid = []
+#for row in range(101):
+    #grid.append([])
+    #for column in range(101):
+        #grid[row].append(0)
+
+#for raw in range(31):
+    #for colum in range(31):
+        #grid[random.randrange(0,100)][random.randrange(0,100)]=1
 #initial status of observing blocks
-visit = []
-for row in range(101):
-    visit.append([])
-    for column in range(101):
-        visit[row].append(0)
+#visit = []
+#for row in range(101):
+    #visit.append([])
+    #for column in range(101):
+       # visit[row].append(0)
+
+grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
+visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 
 #manually setup start and end cells
-start = cell(4, 2)
-end = cell(99, 99)
-start.getHeuristic(99, 99)
-end.getHeuristic(99, 99)
+start = cell(0, 0)
+end = cell(4, 4)
+start.getHeuristic(4, 4)
+end.getHeuristic(4, 4)
 
-gw = gridworld(605, 101, start, end, grid)
+gw = gridworld(605, 5, start, end, grid)
 gw.draw()
+
+expandedCell = list()
 
 #find the shortest path for each step
 def computePath(curr, target):
@@ -41,8 +48,8 @@ def computePath(curr, target):
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
         if pt.x == target.x and pt.y == target.y:
-            print("got it")
-            return pt
+            #print("got it")
+            return pt, closedset
             break
         for dir in direction:
             a = pt.x + dir[0]
@@ -54,7 +61,7 @@ def computePath(curr, target):
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
                 heapq.heappush(openlist, tmp)
-    return
+    return 
 
 
 
@@ -113,7 +120,12 @@ while not flag:
         pt = futurePath[0]
         futurePath = futurePath[1:len(futurePath)]
     else:
-        shortest = computePath(pt, end)
+        shortest, closedSet_i = computePath(pt, end)
+        print("^^^^^^^^^^^^^^^^^^")
+        print(type(list(closedSet_i)))
+        if len(closedSet_i)!=0:
+            expandedCell.extend(list(closedSet_i).copy())
+        print(type(expandedCell))
         if shortest == None:
             print("fail to find a path")
             break
@@ -123,4 +135,5 @@ while not flag:
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break
+print("number of expanded cells: ", len(expandedCell))
 pygame.quit()
