@@ -44,6 +44,15 @@ gw.draw()
 
 expandedCell = list()
 
+def checkandremove(pt, openlist):
+    # print(len(openlist))
+    # print("-----")
+    for i in range(len(openlist)):
+        # print(i)
+        if pt.x == openlist[i].x and pt.y == openlist[i].y:
+            del openlist[i]
+            break
+
 #find the shortest path for each step
 def computePath(curr, target):
     if curr.x == target.x and curr.y == target.y:
@@ -52,9 +61,10 @@ def computePath(curr, target):
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
     heapq.heappush(openlist, curr)
-    closedset.add((curr.x, curr.y))
+    # closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
         pt = heapq.heappop(openlist)
+        closedset.add((pt.x, pt.y))
         if pt.x == target.x and pt.y == target.y:
             return pt, closedset
             break
@@ -63,7 +73,8 @@ def computePath(curr, target):
             b = pt.y + dir[1]
             if a >= 0 and b >= 0 and a < len(visit) and b < len(visit[0]) and visit[a][b] == 0 and (a, b) not in closedset:
                 tmp = cell(a, b)
-                closedset.add((a, b))
+                # closedset.add((a, b))
+                checkandremove(tmp, openlist)
                 tmp.parent = pt
                 tmp.g = pt.g + 1
                 tmp.getHeuristic(target.x, target.y)
@@ -71,7 +82,7 @@ def computePath(curr, target):
                 heapq.heappush(openlist, tmp)
                 # break
         # break
-    return
+    return None, None
 
 
 
@@ -131,17 +142,20 @@ while not flag:
         # print("need to computer a new path")
         # print(pt.x, pt.y)
         shortest, closedSet_i = computePath(end, pt)
-        expandedCell.extend(list(closedSet_i).copy())
-        # print(shortest.x,shortest.y)
         if shortest == None:
             print("fail to find a path")
             break
+        expandedCell.extend(list(closedSet_i).copy())
         if shortest.x == end.x and shortest.y == end.y:
-            # print("finished")
+            print("finished")
             break
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
         pt.parent = None
+
+
+
+
     if(pt.x == end.x and pt.y == end.y):
         print("reach the target")
         break

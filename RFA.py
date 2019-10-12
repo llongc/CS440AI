@@ -28,7 +28,7 @@ from cell import cell
 # visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 
 grid = []
-with open('grids/grid5') as file:
+with open('grids/grid2') as file:
     for line in file:
         line = line[:-1]
         k = [int(char) for char in line]
@@ -70,14 +70,11 @@ def computePath(curr, target):
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
     openlist = []
     heapq.heappush(openlist, curr)
-    closedset.add((curr.x, curr.y))
+    # closedset.add((curr.x, curr.y))
     while len(openlist) != 0:
 
         pt = heapq.heappop(openlist)
         closedset.add((pt.x, pt.y))
-        # print("expanding cell: ")
-        # print(pt.x, pt.y, pt.f, pt.g)
-        # print("-------")
         if pt.x == target.x and pt.y == target.y:
             return pt, closedset
             break
@@ -158,7 +155,7 @@ while not flag:
         futurePath = futurePath[1:len(futurePath)]
     else:
         shortest, closedSet_i = computePath(pt, end)
-        print("^^^^^^^^^^^^^^^^^^")
+        # print("^^^^^^^^^^^^^^^^^^")
         # print(type(list(closedSet_i)))
         if shortest == None:
             print("fail to find a path")
@@ -166,7 +163,6 @@ while not flag:
         if len(closedSet_i)!=0:
             expandedCell.extend(list(closedSet_i).copy())
         # print(type(expandedCell))
-        shortest, closeset_i = computePath(pt, end)
 
         nextPoint, futurePath = getParent(shortest)
         pt = nextPoint
