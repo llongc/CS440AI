@@ -14,15 +14,15 @@ from cell import cell
     #for column in range(101):
         #grid[row].append(0)
 
-#for raw in range(31):
-    #for colum in range(31):
+#for raw in range(54):
+    #for colum in range(54):
         #grid[random.randrange(0,100)][random.randrange(0,100)]=1
 #initial status of observing blocks
 #visit = []
 #for row in range(101):
     #visit.append([])
     #for column in range(101):
-       # visit[row].append(0)
+       #visit[row].append(0)
 
 # grid = [[0, 0, 0, 0, 0],[0, 0, 1, 0, 0],[0, 0, 1, 1, 0],[0, 0, 1, 1, 0],[0, 0, 0, 1, 0]]
 # visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
