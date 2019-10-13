@@ -28,7 +28,7 @@ from cell import cell
 # visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 
 grid = []
-with open('grids/grid2') as file:
+with open('grids/grid0') as file:
     for line in file:
         line = line[:-1]
         k = [int(char) for char in line]
@@ -38,7 +38,7 @@ for i in range(101):
     visit[i] = [0 for i in range(101)]
 
 
-#manually setup start and end cells
+# manually setup start and end cells
 # start = cell(4, 2)
 # end = cell(4, 4)
 # start.getHeuristic(4, 4)
@@ -64,7 +64,7 @@ def checkandremove(pt, openlist):
 
 #find the shortest path for each step
 def computePath(curr, target):
-    # print("11111")
+    # print("------------------")
     # print(target.x, target.y)
     closedset = set()
     direction = [[0,1],[1,0],[-1,0],[0,-1]]
@@ -74,6 +74,8 @@ def computePath(curr, target):
     while len(openlist) != 0:
 
         pt = heapq.heappop(openlist)
+        # print("expanding: ")
+        # print(pt.x, pt.y)
         closedset.add((pt.x, pt.y))
         if pt.x == target.x and pt.y == target.y:
             return pt, closedset
@@ -161,7 +163,10 @@ while not flag:
             print("fail to find a path")
             break
         if len(closedSet_i)!=0:
+            print("expanded set lenth is: ")
+            print(len(closedSet_i))
             expandedCell.extend(list(closedSet_i).copy())
+            # expandedCell = expandedCell.union(closedSet_i)
         # print(type(expandedCell))
 
         nextPoint, futurePath = getParent(shortest)

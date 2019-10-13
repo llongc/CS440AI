@@ -80,4 +80,4 @@ class gridworld:
     					self.width,
     					self.height])
         pygame.display.update()
-        self.clock.tick(60)
+        self.clock.tick(100)
