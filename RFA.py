@@ -28,7 +28,7 @@ from cell import cell
 # visit = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]]
 
 grid = []
-with open('grids/grid0') as file:
+with open('grids/grid4') as file:
     for line in file:
         line = line[:-1]
         k = [int(char) for char in line]
