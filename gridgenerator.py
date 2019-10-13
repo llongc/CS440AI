@@ -17,11 +17,12 @@ for i in range(50):
         for column in range(101):
             grid[row].append(0)
 
-    for raw in range(31):
-        for colum in range(31):
+    for raw in range(53):
+        for colum in range(53):
             grid[random.randrange(0,101)][random.randrange(0,101)]=1
 
     grid[100][100] = 0
+    grid[0][0] = 0
     f = open(fileN, "w")
     for row in range(101):
         for column in range(101):
