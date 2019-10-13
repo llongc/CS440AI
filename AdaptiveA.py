@@ -125,28 +125,13 @@ def computenewh(closevalue, x):
 def getParent(a):
     future = []
     p = a
-    # finalcost = p.f
     if p.parent == None:
-        # if finalcost - p.g > newh[p.x][p.y]:
-        # newh[p.x][p.y] = finalcost - p.g
-        # print(p.x, p.y, p.g, p.f, p.h, newh[p.x][p.y])
         return p
     while p.parent.parent != None:
         future.insert(0, p)
-        # if finalcost - p.g > newh[p.x][p.y]:
-        # newh[p.x][p.y] = finalcost - p.g
-        # print(p.x, p.y, p.g, p.f, p.h, newh[p.x][p.y])
-        # print(p.x, p.y, p.f, p.h, newh[p.x][p.y])
         tmp = p
         p = p.parent
         tmp.parent = None
-    # if finalcost - p.g > newh[p.x][p.y]:
-    # newh[p.x][p.y] = finalcost - p.g
-    # print(p.x, p.y, p.g, p.f, p.h, newh[p.x][p.y])
-    # if finalcost - p.g > newh[p.parent.x][p.parent.y]:
-    # newh[p.parent.x][p.parent.y] = finalcost - p.parent.g
-    # print(p.parent.x, p.parent.y, p.parent.g, p.parent.f, p.parent.h, newh[p.parent.x][p.parent.y])
-    # print(p.x, p.y, p.f, p.h, newh[p.x][p.y])
     return p, future
 
 #print out the path, for testing purpose

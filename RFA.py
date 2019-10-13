@@ -163,8 +163,8 @@ while not flag:
             print("fail to find a path")
             break
         if len(closedSet_i)!=0:
-            print("expanded set lenth is: ")
-            print(len(closedSet_i))
+            # print("expanded set lenth is: ")
+            # print(len(closedSet_i))
             expandedCell.extend(list(closedSet_i).copy())
             # expandedCell = expandedCell.union(closedSet_i)
         # print(type(expandedCell))
