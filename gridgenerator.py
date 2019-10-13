@@ -17,8 +17,8 @@ for i in range(50):
         for column in range(101):
             grid[row].append(0)
 
-    for raw in range(53):
-        for colum in range(53):
+    for raw in range(54):
+        for colum in range(54):
             grid[random.randrange(0,101)][random.randrange(0,101)]=1
 
     grid[100][100] = 0
